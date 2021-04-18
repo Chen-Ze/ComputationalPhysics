@@ -2,6 +2,8 @@ import numpy as np
 import qmc
 from joblib import Parallel, delayed
 
+import matplotlib.pyplot as plt
+
 
 def helium_hamiltonian_over_psi(psi, x, a):
     r1 = np.array(x[:3])
@@ -32,7 +34,7 @@ def helium_qmc(a, steps, delta_t, starting):
     return qmc.qmc(hamiltonian_over_psi, psi, [-0.5, -0.5, -0.5, 0.5, 0.5, 0.5], steps, delta_t, starting)
 
 def helium_qmc_a(a):
-    results = Parallel(n_jobs=6)(delayed(lambda i: helium_qmc(a, 10000, 0.3, 1000))(i) for i in range(12))
+    results = Parallel(n_jobs=6)(delayed(lambda i: helium_qmc(a, 30000, 0.3, 1000))(i) for i in range(72))
     results = [result[0] for result in results]
     return results
 
